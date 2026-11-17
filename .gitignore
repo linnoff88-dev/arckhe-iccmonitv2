@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+auth.json
+
+# Runtime data
+state/
+*.log
+*.pid
+*.port
+*.bind
+
+# Agent and editor metadata
+.claude/
+.codex/
+.agents/
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# Test and build output
+.coverage
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+dist/
+build/

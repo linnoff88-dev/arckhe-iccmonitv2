@@ -1,0 +1,3 @@
+anthropic==0.84.0
+textual==8.2.4
+textual-serve==1.1.3

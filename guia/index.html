@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="iccmonit v2 — monitor local e seguro para sessões Claude Code">
+  <title>iccmonit v2</title>
+  <style>
+    :root{color-scheme:dark;--bg:#0b0c10;--card:#151820;--line:#2a2f3a;--text:#f3f4f6;--muted:#a7afbd;--accent:#e2a23b}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,sans-serif}
+    main{max-width:980px;margin:auto;padding:72px 24px}h1{font-size:clamp(2.7rem,8vw,5.5rem);line-height:.95;margin:0}
+    h1 span{color:var(--accent)}h2{margin-top:64px}.lead{font-size:1.25rem;color:var(--muted);max-width:680px}
+    .buttons{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0}.button{padding:12px 18px;border-radius:10px;background:var(--accent);color:#1d1405;text-decoration:none;font-weight:700}
+    .button.alt{background:transparent;color:var(--text);border:1px solid var(--line)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:var(--card);border:1px solid var(--line);padding:20px;border-radius:14px}
+    .card p{color:var(--muted)}pre{background:#050608;border:1px solid var(--line);padding:18px;border-radius:12px;overflow:auto}
+    code{color:#f2c46d}@media(max-width:720px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <p>INEMA · Python · Textual</p>
+  <h1>iccmonit <span>v2</span></h1>
+  <p class="lead">Visão consolidada das sessões Claude Code, da máquina e dos serviços locais — com recursos sensíveis desativados por padrão.</p>
+  <div class="buttons">
+    <a class="button" href="https://github.com/inematds/iccmonitv2">Ver no GitHub</a>
+    <a class="button alt" href="#inicio">Como instalar</a>
+  </div>
+  <section class="grid">
+    <article class="card"><h2>Local primeiro</h2><p>O modo web usa somente <code>127.0.0.1</code>. Acesso remoto é feito com túnel SSH.</p></article>
+    <article class="card"><h2>Privacidade</h2><p>Chat, transcripts e logs são opt-in. Caminhos completos e IDs não entram no prompt geral.</p></article>
+    <article class="card"><h2>Controle</h2><p>Ações Docker e probes de autenticação ficam bloqueados até habilitação explícita.</p></article>
+  </section>
+  <section id="inicio">
+    <h2>Começar</h2>
+    <pre><code>git clone git@github.com:inematds/iccmonitv2.git
+cd iccmonitv2
+./start.sh</code></pre>
+    <h2>Modo web local</h2>
+    <pre><code>./start.sh web
+# acesso remoto seguro:
+ssh -L 8000:127.0.0.1:8000 usuario@maquina</code></pre>
+  </section>
+</main>
+</body>
+</html>
