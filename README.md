@@ -17,7 +17,7 @@ servidor web somente em localhost e recursos sensíveis desativados por padrêo.
 ## Instalaçêo
 
 ```bash
-git clone git@github.com:inematds/iccmonitv2.git
+git clone git@github.com:linnoff88-dev/iccmonitv2.git
 cd iccmonitv2
 ./start.sh
 ```

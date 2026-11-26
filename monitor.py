@@ -50,7 +50,7 @@ CODEX_PROBE_ENABLED = os.environ.get("ICCMONIT_ENABLE_CODEX_PROBE") == "1"
 
 
 def read_recent_incidents(limit: int = 5) -> list[dict]:
-    """Lê eventos escritos por watchdogs (ex.: inemaimg-watchdog)."""
+    """Lê eventos escritos por watchdogs (ex.: ARCKHÉimg-watchdog)."""
     try:
         data = json.loads(INCIDENTS_FILE.read_text())
         return list(data.get("incidents", []))[-limit:][::-1]
@@ -1395,7 +1395,7 @@ class ChatPane(Vertical):
             log.write("  [yellow]geral[/]   responde sobre todas as sessões (estado do painel)")
             log.write("  [yellow]focado[/]  transcript somente com ICCMONIT_INCLUDE_TRANSCRIPT=1")
             log.write("")
-            log.write("[bold]docs[/]  [dim]https://github.com/inematds/iccmonitv2[/]")
+            log.write("[bold]docs[/]  [dim]https://github.com/linnoff88-dev/iccmonitv2[/]")
         elif cmd == "/diag":
             log.write("[bold magenta]── diagnóstico do painel ──[/]")
             for line in diagnose_panel(self._sessions, self._quota):
