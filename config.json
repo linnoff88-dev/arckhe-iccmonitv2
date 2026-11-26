@@ -8,7 +8,7 @@
       "green":  60,
       "yellow": 85,
       "red":    95,
-      "notes": "% de uso da cota (5h, 7d, 7d-sonnet). Azul=folgado, Verde=normal, Amarelo=atenção, Vermelho=crítico"
+      "notes": "% de uso da cota (5h, 7d, 7d-sonnet). Azul=folgado, Verde=normal, Amarelo=atençêo, Vermelho=crítico"
     },
     "context_pct": {
       "blue":           10,
@@ -17,7 +17,7 @@
       "red":            80,
       "critical":       80,
       "critical_style": "blink bold magenta",
-      "notes": "% da janela de contexto usada por sessão. >80% = crítico (pisca magenta)"
+      "notes": "% da janela de contexto usada por sessêo. >80% = crítico (pisca magenta)"
     },
     "memory_kb": {
       "blue":   0,
@@ -31,7 +31,7 @@
       "green":  10,
       "yellow": 20,
       "red":    35,
-      "notes": "Número de arquivos de memória. >35 arquivos = fragmentação excessiva"
+      "notes": "Número de arquivos de memória. >35 arquivos = fragmentaçêo excessiva"
     },
     "claude_md_bytes": {
       "blue":   0,
@@ -45,14 +45,14 @@
       "green":  5,
       "yellow": 15,
       "red":    30,
-      "notes": "Agentes lançados na sessão. >30 = sessão muito pesada, considerar dividir"
+      "notes": "Agentes lançados na sessêo. >30 = sessêo muito pesada, considerar dividir"
     },
     "cost_per_session_usd": {
       "blue":   0.0,
       "green":  2.0,
       "yellow": 8.0,
       "red":    20.0,
-      "notes": "Custo acumulado por sessão em USD. >$20 = sessão cara, verificar eficiência"
+      "notes": "Custo acumulado por sessêo em USD. >$20 = sessêo cara, verificar eficiência"
     },
     "system_pct": {
       "blue":   20,
@@ -69,7 +69,7 @@
     "context_red":     { "enabled": true,  "message": "⚠ Contexto alto — risco de compaction" },
     "memory_red":      { "enabled": true,  "message": "⚠ Memória excessiva — rode /memory-audit" },
     "claude_md_red":   { "enabled": false, "message": "⚠ CLAUDE.md muito grande" },
-    "cost_red":        { "enabled": true,  "message": "⚠ Sessão cara" }
+    "cost_red":        { "enabled": true,  "message": "⚠ Sessêo cara" }
   },
 
   "chat": {

@@ -24,7 +24,7 @@ Uso:
   ./start.sh web [porta]     abre a TUI no navegador, somente em 127.0.0.1
   ./start.sh -h              mostra esta ajuda
 
-Opções sensíveis são opt-in:
+Opções sensíveis sêo opt-in:
   ICCMONIT_ENABLE_CHAT=1
   ICCMONIT_INCLUDE_TRANSCRIPT=1
   ICCMONIT_ENABLE_CHAT_LOG=1

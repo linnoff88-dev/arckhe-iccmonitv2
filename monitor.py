@@ -31,7 +31,7 @@ LIMITS_CACHE = Path(f"/tmp/cc_limits_{os.getuid()}.json")
 def context_window_for(model: str) -> int:
     """Retorna o tamanho do context window pelo nome do modelo.
 
-    Opus 4.7: 1M. Sonnet/Haiku: 200k (padrão; pode ser configurado pra 1M).
+    Opus 4.7: 1M. Sonnet/Haiku: 200k (padrêo; pode ser configurado pra 1M).
     Se o total de tokens exceder 200k, o chamador deve usar 1M.
     """
     m = model.lower()
@@ -108,8 +108,8 @@ def fmt_tokens(n: int) -> str:
 
 
 def load_sessions(include_dead: bool = False) -> list[dict]:
-    """Lista sessões. Por padrão só as vivas; include_dead=True traz todas
-    do filesystem, marcando _alive=False nas que o PID já não existe."""
+    """Lista sessões. Por padrêo só as vivas; include_dead=True traz todas
+    do filesystem, marcando _alive=False nas que o PID já nêo existe."""
     sessions = []
     if not SESSIONS_DIR.exists():
         return sessions
@@ -244,7 +244,7 @@ def get_docker_info() -> dict:
             })
         return {"available": True, "containers": containers}
     except FileNotFoundError:
-        return {"available": False, "containers": [], "error": "docker não instalado"}
+        return {"available": False, "containers": [], "error": "docker nêo instalado"}
     except Exception as e:
         return {"available": False, "containers": [], "error": str(e)[:80]}
 
@@ -286,7 +286,7 @@ def get_boot_services() -> dict:
             })
         return {"available": True, "services": services}
     except FileNotFoundError:
-        return {"available": False, "services": [], "error": "systemctl não disponível"}
+        return {"available": False, "services": [], "error": "systemctl nêo disponível"}
     except Exception as e:
         return {"available": False, "services": [], "error": str(e)[:80]}
 
@@ -323,13 +323,13 @@ def get_top_processes(n: int = 10, sort_by: str = "cpu") -> list[dict]:
 
 
 def find_active_transcript(session: dict) -> Optional[Path]:
-    """Acha o transcript em uso AGORA pelo PID da sessão.
+    """Acha o transcript em uso AGORA pelo PID da sessêo.
 
     O ~/.claude/sessions/<pid>.json congela o sessionId no momento em que
     o Claude Code arrancou — após /clear, novo JSONL é criado mas o
-    session.json não muda. Estratégia: pegar o JSONL mais recente (mtime)
+    session.json nêo muda. Estratégia: pegar o JSONL mais recente (mtime)
     no diretório do projeto. Se o apontado pelo session.json for o mais
-    novo, usa ele; senão, usa o mais novo.
+    novo, usa ele; senêo, usa o mais novo.
     """
     cwd = session.get("cwd", "")
     session_id = session.get("sessionId", "")
@@ -343,7 +343,7 @@ def find_active_transcript(session: dict) -> Optional[Path]:
     if not project_dir:
         return None
     hinted = project_dir / f"{session_id}.jsonl"
-    # sessão morta: confia só no sessionId congelado (último estado conhecido)
+    # sessêo morta: confia só no sessionId congelado (último estado conhecido)
     if not session.get("_alive", True):
         return hinted if hinted.exists() else None
     candidates = sorted(
@@ -561,7 +561,7 @@ def short_project(cwd: str) -> str:
 
 
 def escape_markup(s: str) -> str:
-    """Escapa '[' em strings dinâmicas pra não confundir parser de markup
+    """Escapa '[' em strings dinâmicas pra nêo confundir parser de markup
     (ex.: docker IPv6 ports vêm como '[::]' e a TUI interpreta como tag)."""
     return (s or "").replace("[", r"\[")
 
@@ -698,7 +698,7 @@ class BootPanel(Static):
 
 
 class SectionLabel(Label):
-    """Label do título de uma seção. Click abre o modal fullscreen daquela seção."""
+    """Label do título de uma seçêo. Click abre o modal fullscreen daquela seçêo."""
 
     class Clicked(Message):
         def __init__(self, section: str) -> None:
@@ -806,9 +806,9 @@ class PanelOverlay(Vertical):
     def show_kind(self, kind: str, app) -> None:
         """Popula o overlay com o widget do kind solicitado e exibe.
 
-        Idempotente: apertar a mesma tecla 2x não crasha; só re-renderiza.
-        IMPORTANTE: body.mount() é async — o widget filho ainda não rodou
-        compose/on_mount quando voltamos. Por isso TODA atualização passa
+        Idempotente: apertar a mesma tecla 2x nêo crasha; só re-renderiza.
+        IMPORTANTE: body.mount() é async — o widget filho ainda nêo rodou
+        compose/on_mount quando voltamos. Por isso TODA atualizaçêo passa
         por call_after_refresh, garantindo que o DataTable interno
         (em SessionTable/ProcessTable) esteja pronto antes do query_one.
         """
@@ -833,7 +833,7 @@ class PanelOverlay(Vertical):
             # mesmo kind reaberto — só refaz o body, sem precisar fazer nada extra
             pass
 
-        # IDs evitados nos widgets internos pra não conflitar com remove async
+        # IDs evitados nos widgets internos pra nêo conflitar com remove async
         if kind == "quota":
             w = QuotaBar()
             body.mount(w)
@@ -860,7 +860,7 @@ class PanelOverlay(Vertical):
                     w.update_sessions(sessions)
             self.app.call_after_refresh(_populate_sessions)
         elif kind in ("docker", "boot"):
-            # Static como child do ScrollableContainer na construção —
+            # Static como child do ScrollableContainer na construçêo —
             # mount único, sem race entre dois mounts encadeados
             content = Static("[dim]coletando...[/]")
             sc = ScrollableContainer(content)
@@ -929,7 +929,7 @@ class PanelOverlay(Vertical):
                 lines.append(f"[red]Docker erro:[/] {escape_markup(docker.get('error', 'indisponível'))}")
             self.app.call_from_thread(self._safe_set_content, content_widget, "\n".join(lines))
         except Exception as e:
-            self.app.call_from_thread(self._safe_set_content, content_widget, f"[red]exceção docker: {e}[/]")
+            self.app.call_from_thread(self._safe_set_content, content_widget, f"[red]exceçêo docker: {e}[/]")
 
     def _load_boot(self, content_widget) -> None:
         try:
@@ -952,7 +952,7 @@ class PanelOverlay(Vertical):
                 lines.append(f"[red]systemd erro:[/] {boot.get('error', 'indisponível')}")
             self.app.call_from_thread(self._safe_set_content, content_widget, "\n".join(lines))
         except Exception as e:
-            self.app.call_from_thread(self._safe_set_content, content_widget, f"[red]exceção boot: {e}[/]")
+            self.app.call_from_thread(self._safe_set_content, content_widget, f"[red]exceçêo boot: {e}[/]")
 
     def _safe_set_content(self, content_widget, text: str) -> None:
         """Atualiza o Static; se o widget desapareceu (modal fechou),
@@ -1071,7 +1071,7 @@ class SessionTable(Static):
     def update_sessions_enriched(self, enriched: list[dict]) -> None:
         """Aceita dados já pré-computados (transcripts já lidos numa thread)."""
         table = self.query_one(DataTable)
-        # belt-and-suspenders: garante colunas (caso on_mount não tenha
+        # belt-and-suspenders: garante colunas (caso on_mount nêo tenha
         # rodado ainda — overlay monta widget e popula no mesmo tick)
         if not table.columns:
             table.add_columns(
@@ -1113,10 +1113,10 @@ class SessionTable(Static):
 
 
 def load_session_messages(session: dict, max_chars: int = 25000) -> str:
-    """Extrai turns user/assistant recentes do transcript ATIVO da sessão."""
+    """Extrai turns user/assistant recentes do transcript ATIVO da sessêo."""
     transcript = find_active_transcript(session)
     if not transcript:
-        return "(transcript não encontrado)"
+        return "(transcript nêo encontrado)"
 
     turns: list[tuple[str, str]] = []
     try:
@@ -1158,7 +1158,7 @@ def load_session_messages(session: dict, max_chars: int = 25000) -> str:
         out.append(snippet)
         total += len(snippet)
     out.reverse()
-    return "\n\n".join(out) if out else "(sessão sem mensagens textuais)"
+    return "\n\n".join(out) if out else "(sessêo sem mensagens textuais)"
 
 
 def recommend_skills(sessions: list[dict]) -> dict[str, list[str]]:
@@ -1167,7 +1167,7 @@ def recommend_skills(sessions: list[dict]) -> dict[str, list[str]]:
     Regras:
     - session-handoff   → ctx amarelo/vermelho (risco de auto-compaction)
     - memory-audit      → memória amarela/vermelha OU CLAUDE.md vermelho
-    - session-statusline → recomendação geral (sem sessão específica)
+    - session-statusline → recomendaçêo geral (sem sessêo específica)
     """
     rec: dict[str, list[str]] = {
         "session-handoff": [],
@@ -1214,7 +1214,7 @@ def diagnose_panel(sessions: list[dict], quota: dict) -> list[str]:
         elif color == "yellow":
             out.append(f"[yellow]🟡 cota {label} em {pct:.0f}%[/] — reset {utc_to_local(q.get('resets_at',''))}")
 
-    # ── por sessão ───────────────────────────────────────────────────────────
+    # ── por sessêo ───────────────────────────────────────────────────────────
     for s in sessions:
         proj = short_project(s.get("cwd", ""))
         _, _, ctx_pct = get_transcript_usage(s)
@@ -1224,7 +1224,7 @@ def diagnose_panel(sessions: list[dict], quota: dict) -> list[str]:
         if ctx_color == "red":
             out.append(f"[red]🔴 {proj}[/] ctx {ctx_pct:.0f}% — risco de auto-compaction. Considere [cyan]session-handoff[/] antes de /clear.")
         elif ctx_color == "yellow":
-            out.append(f"[yellow]🟡 {proj}[/] ctx {ctx_pct:.0f}% — atenção, ainda dá pra continuar.")
+            out.append(f"[yellow]🟡 {proj}[/] ctx {ctx_pct:.0f}% — atençêo, ainda dá pra continuar.")
 
         mem_color = color_for(extras["mem_kb"], "memory_kb")
         if mem_color == "red":
@@ -1238,7 +1238,7 @@ def diagnose_panel(sessions: list[dict], quota: dict) -> list[str]:
 
         agt_color = color_for(extras["agents"], "agents_per_session")
         if agt_color == "red":
-            out.append(f"[red]🔴 {proj}[/] {extras['agents']} agentes lançados — sessão pesada, considere dividir.")
+            out.append(f"[red]🔴 {proj}[/] {extras['agents']} agentes lançados — sessêo pesada, considere dividir.")
 
     if not out:
         out.append("[green]✓ tudo verde — nenhum threshold atingido.[/]")
@@ -1246,7 +1246,7 @@ def diagnose_panel(sessions: list[dict], quota: dict) -> list[str]:
 
 
 def build_session_prompt(focus: dict, sessions: list[dict], quota: dict) -> str:
-    """System prompt quando o chat está focado numa sessão específica."""
+    """System prompt quando o chat está focado numa sessêo específica."""
     base = build_system_prompt(sessions, quota)
     transcript_excerpt = (
         load_session_messages(focus)
@@ -1255,9 +1255,9 @@ def build_session_prompt(focus: dict, sessions: list[dict], quota: dict) -> str:
     )
     extra = f"""
 
-## Sessão em foco
+## Sessêo em foco
 
-Você está focado em discutir UMA sessão específica abaixo. Responda perguntas SOBRE essa sessão usando o transcript como referência. Você é um observador analítico — NÃO finja ser o usuário ou o agente daquela sessão.
+Você está focado em discutir UMA sessêo específica abaixo. Responda perguntas SOBRE essa sessêo usando o transcript como referência. Você é um observador analítico — NêO finja ser o usuário ou o agente daquela sessêo.
 
 - Projeto: {short_project(focus.get('cwd', ''))}
 - Status: {focus.get('status', '?')}
@@ -1288,7 +1288,7 @@ def build_system_prompt(sessions: list[dict], quota: dict) -> str:
     if sds and sds.get("utilization") is not None:
         lines.append(f"- 7d Sonnet: {sds.get('utilization', 0):.0f}% usado, reset em {utc_to_local(sds.get('resets_at', ''))}")
 
-    lines += ["", "## Sessões ativas", f"Total: {len(sessions)} sessão(ões)"]
+    lines += ["", "## Sessões ativas", f"Total: {len(sessions)} sessêo(ões)"]
     for s in sessions:
         model, tokens, ctx_pct = get_transcript_usage(s)
         cost = get_session_cost(s)
@@ -1300,7 +1300,7 @@ def build_system_prompt(sessions: list[dict], quota: dict) -> str:
             f"CLAUDE.md: {fmt_bytes(extras['claude_md'])} | "
             f"memória: {extras['mem_files']} arquivos / {extras['mem_kb']}kb | "
             f"agentes lançados: {extras['agents']} | skills invocadas: {extras['skills']} | "
-            f"última atualização: {ago(s.get('updatedAt',0))} atrás"
+            f"última atualizaçêo: {ago(s.get('updatedAt',0))} atrás"
         )
 
     lines += ["", "Responda em português. Seja direto e objetivo."]
@@ -1320,7 +1320,7 @@ class ChatPane(Vertical):
         self._focus_session_id: Optional[str] = None
         log = self.query_one("#chat-log", RichLog)
         if not CHAT_ENABLED:
-            log.write("[yellow]Chat desativado por padrão.[/]")
+            log.write("[yellow]Chat desativado por padrêo.[/]")
             log.write("[dim]Para habilitar: ICCMONIT_ENABLE_CHAT=1 ./start.sh[/]")
             return
         token = get_oauth_token()
@@ -1331,9 +1331,9 @@ class ChatPane(Vertical):
                 default_headers={"anthropic-beta": "oauth-2025-04-20"},
             )
             log.write("[dim]Chat pronto — ciente do estado do painel. Modelo: haiku-4-5[/]")
-            log.write("[dim]Selecione uma linha da tabela e Enter pra focar numa sessão. /help pra comandos.[/]")
+            log.write("[dim]Selecione uma linha da tabela e Enter pra focar numa sessêo. /help pra comandos.[/]")
         else:
-            log.write("[red]Token OAuth não encontrado. Chat indisponível.[/]")
+            log.write("[red]Token OAuth nêo encontrado. Chat indisponível.[/]")
 
     def update_context(self, sessions: list[dict], quota: dict) -> None:
         self._sessions = sessions
@@ -1372,7 +1372,7 @@ class ChatPane(Vertical):
             log.write("  [cyan]1[/] [dim]/[/] [cyan]2[/]        overlay Cota / Máquina  [dim](ocultos no footer)[/]")
             log.write("  [cyan]Esc[/]          fecha overlay (volta pro slot)")
             log.write("  [cyan]click título[/] mesma coisa que a tecla — slot/overlay")
-            log.write("  [cyan]↑/↓ + Enter[/]  numa linha de Sessão → foca chat naquela sessão")
+            log.write("  [cyan]↑/↓ + Enter[/]  numa linha de Sessêo → foca chat naquela sessêo")
             log.write("  [cyan], . =[/]        encolhe / aumenta / reseta split (60/40)")
             log.write("")
             log.write("[bold]toggles dentro dos painéis[/]  [dim](click ou tecla)[/]")
@@ -1382,14 +1382,14 @@ class ChatPane(Vertical):
             log.write("[bold]chat — comandos[/]")
             log.write("  [cyan]/help[/]    esta ajuda")
             log.write("  [cyan]/diag[/]    diagnóstico do painel (cota + sessões em alerta)")
-            log.write("  [cyan]/skills[/]  recomenda qual sessão deve rodar qual skill")
+            log.write("  [cyan]/skills[/]  recomenda qual sessêo deve rodar qual skill")
             log.write("            [dim](session-statusline · memory-audit · session-handoff)[/]")
             log.write("  [cyan]/docker[/]  lista containers; ações exigem ICCMONIT_ALLOW_DOCKER_ACTIONS=1")
             log.write("  [cyan]/codex[/]   probe opcional; exige ICCMONIT_ENABLE_CODEX_PROBE=1")
             log.write("  [cyan]/clear[/]   volta ao modo geral (limpa foco e histórico)")
             log.write("  [cyan]/log[/]     log opt-in; exige ICCMONIT_ENABLE_CHAT_LOG=1")
             log.write("  [cyan]/where[/]   paths locais do log e config")
-            log.write("  [dim]/fork[/]    [dim]V2 — não disponível ainda[/]")
+            log.write("  [dim]/fork[/]    [dim]V2 — nêo disponível ainda[/]")
             log.write("")
             log.write("[bold]modos do chat[/]")
             log.write("  [yellow]geral[/]   responde sobre todas as sessões (estado do painel)")
@@ -1406,8 +1406,8 @@ class ChatPane(Vertical):
             log.write("")
 
             log.write("[bold cyan]session-statusline[/] → checkpoint operacional rápido")
-            log.write("  [dim]Triggers: 'onde estamos', 'checkpoint', 'organiza a sessão'[/]")
-            log.write("  [dim green]→ rode em qualquer sessão ativa pra snapshot do que está em andamento[/]")
+            log.write("  [dim]Triggers: 'onde estamos', 'checkpoint', 'organiza a sessêo'[/]")
+            log.write("  [dim green]→ rode em qualquer sessêo ativa pra snapshot do que está em andamento[/]")
             log.write("")
 
             log.write("[bold cyan]memory-audit[/] → auditoria de memória/CLAUDE.md")
@@ -1417,19 +1417,19 @@ class ChatPane(Vertical):
                 for r in rec["memory-audit"]:
                     log.write(f"    {r}")
             else:
-                log.write("  [dim green]→ nenhuma sessão precisa agora[/]")
+                log.write("  [dim green]→ nenhuma sessêo precisa agora[/]")
             log.write("")
 
             log.write("[bold cyan]session-handoff[/] → resumo final antes de /clear")
-            log.write("  [dim]Triggers: 'vou dar /clear', 'handoff', 'encerrar sessão'[/]")
+            log.write("  [dim]Triggers: 'vou dar /clear', 'handoff', 'encerrar sessêo'[/]")
             if rec["session-handoff"]:
                 log.write("  [bold yellow]→ recomendado em:[/]")
                 for r in rec["session-handoff"]:
                     log.write(f"    {r}")
             else:
-                log.write("  [dim green]→ nenhuma sessão precisa agora[/]")
+                log.write("  [dim green]→ nenhuma sessêo precisa agora[/]")
             log.write("")
-            log.write("[dim]Pra rodar: foque a sessão alvo no monitor, abra o terminal dela e digite o trigger ou /<skill-name>.[/]")
+            log.write("[dim]Pra rodar: foque a sessêo alvo no monitor, abra o terminal dela e digite o trigger ou /<skill-name>.[/]")
         elif cmd == "/log":
             log.write(f"[bold]── últimas 20 entradas de {CHAT_LOG.name} ──[/]")
             for ln in tail_chat_log(20):
@@ -1438,7 +1438,7 @@ class ChatPane(Vertical):
             log.write(f"[bold]chat log:[/]   {CHAT_LOG}")
             log.write(f"[bold]config:[/]     {CONFIG_FILE}")
         elif cmd == "/fork":
-            log.write("[yellow]/fork[/] ainda não implementado — está no roadmap V2.")
+            log.write("[yellow]/fork[/] ainda nêo implementado — está no roadmap V2.")
             log.write("[dim]A ideia: abrir 'claude --resume <sessionId>' num subprocess paralelo,[/]")
             log.write("[dim]forkando a conversa selecionada num novo terminal.[/]")
         elif cmd.startswith("/docker"):
@@ -1488,7 +1488,7 @@ class ChatPane(Vertical):
             out = r.stdout if ok else r.stderr
             self.app.call_from_thread(self._on_docker_list, ok, out)
         except FileNotFoundError:
-            self.app.call_from_thread(self._on_docker_list, False, "docker não instalado")
+            self.app.call_from_thread(self._on_docker_list, False, "docker nêo instalado")
         except Exception as e:
             self.app.call_from_thread(self._on_docker_list, False, str(e))
 
@@ -1525,7 +1525,7 @@ class ChatPane(Vertical):
             out = (r.stdout + r.stderr).strip()
             self.app.call_from_thread(self._on_docker_action, name, action, ok, out)
         except FileNotFoundError:
-            self.app.call_from_thread(self._on_docker_action, name, action, False, "docker não instalado")
+            self.app.call_from_thread(self._on_docker_action, name, action, False, "docker nêo instalado")
         except subprocess.TimeoutExpired:
             self.app.call_from_thread(self._on_docker_action, name, action, False, "timeout")
         except Exception as e:
@@ -1535,7 +1535,7 @@ class ChatPane(Vertical):
     def _codex_quota_async(self) -> None:
         """Probe codex/OpenAI. Detecta se está logado em modo ChatGPT ou API key.
 
-        - auth_mode='chatgpt' → relata login via Plus/Pro (cota não exposta via API)
+        - auth_mode='chatgpt' → relata login via Plus/Pro (cota nêo exposta via API)
         - api key disponível  → GET em /v1/models e lê headers de rate limit
         """
         info: dict = {"mode": None, "source": None, "key": None,
@@ -1590,7 +1590,7 @@ class ChatPane(Vertical):
         log = self.query_one("#chat-log", RichLog)
         mode = info.get("mode")
         if mode is None:
-            log.write("[red]codex não autenticado.[/]")
+            log.write("[red]codex nêo autenticado.[/]")
             log.write("[dim]Esperado: $OPENAI_API_KEY ou ~/.codex/auth.json com auth_mode válido.[/]")
             if info.get("error"):
                 log.write(f"[dim]{info['error']}[/]")
@@ -1602,7 +1602,7 @@ class ChatPane(Vertical):
             if info.get("last_refresh"):
                 log.write(f"  [cyan]token refresh:[/] {info['last_refresh']}")
             log.write("[yellow]Cota indisponível por API:[/] o modo ChatGPT (Plus/Pro)")
-            log.write("[dim]conta por mensagens, não por tokens. O 'restante' só aparece quando[/]")
+            log.write("[dim]conta por mensagens, nêo por tokens. O 'restante' só aparece quando[/]")
             log.write("[dim]você bate o limite. Pra ver uso/limite, abra chatgpt.com/settings.[/]")
             return
         # mode == api_key
@@ -1660,13 +1660,13 @@ class ChatPane(Vertical):
             log.write("[yellow]aguarde a resposta anterior...[/]")
             return
 
-        # Render imediato — não trava enquanto a API responde
+        # Render imediato — nêo trava enquanto a API responde
         log.write(f"[bold cyan]você:[/] {msg}")
         log.write("[dim italic]aguardando claude...[/]")
         log_chat("user", msg, focus=self._focus_session_id)
         self._history.append({"role": "user", "content": msg})
         self._pending = True
-        # snapshot dos dados — worker não toca em self._sessions etc.
+        # snapshot dos dados — worker nêo toca em self._sessions etc.
         focus_id = self._focus_session_id
         sessions_snap = list(self._sessions)
         quota_snap = dict(self._quota)
@@ -1676,7 +1676,7 @@ class ChatPane(Vertical):
     @work(thread=True, exclusive=False)
     def _send_to_api(self, msg: str, focus_id: Optional[str],
                     sessions: list, quota: dict, history: list) -> None:
-        """Roda numa thread — não bloqueia a TUI."""
+        """Roda numa thread — nêo bloqueia a TUI."""
         try:
             focus = None
             if focus_id:
@@ -1718,14 +1718,14 @@ class ChatPane(Vertical):
             exp_msg = ""
             if exp is not None:
                 exp_msg = f" (token expira em {exp/3600:.1f}h)" if exp > 0 else " (token EXPIRADO)"
-            log.write(f"[red]401 — OAuth não aceito{exp_msg}.[/]")
+            log.write(f"[red]401 — OAuth nêo aceito{exp_msg}.[/]")
             log.write("[dim]Logue de novo no Claude Code (claude logout/login) ou aguarde refresh automático.[/]")
             log.write("[dim]Confira o login do Claude Code.[/]")
         else:
             log.write(f"[red]erro {status or ''}:[/] {str(e)[:300]}")
             if CHAT_LOG_ENABLED:
                 log.write(f"[dim]Detalhes em {CHAT_LOG.name}.[/]")
-        # remove user msg que falhou pra não envenenar próximas requests
+        # remove user msg que falhou pra nêo envenenar próximas requests
         if self._history and self._history[-1].get("role") == "user":
             self._history.pop()
 
@@ -1935,7 +1935,7 @@ class MonitorApp(App):
     def _apply_refresh(self, quota, quota_age, sys_status, sessions, enriched, procs, docker, boot) -> None:
         """Roda na main thread — atualiza widgets atomicamente.
 
-        Cota: só sobrescreve _last_quota se vier dado novo, senão mantém
+        Cota: só sobrescreve _last_quota se vier dado novo, senêo mantém
         os valores anteriores (e marca staleness via quota_age).
         """
         if quota:
@@ -1988,7 +1988,7 @@ class MonitorApp(App):
         self.show_all_sessions = not self.show_all_sessions
         self.refresh_data()
 
-    # toggle_* removidos: não há mais inline-on/off independente. Use 3/4/5/6.
+    # toggle_* removidos: nêo há mais inline-on/off independente. Use 3/4/5/6.
 
     def action_toggle_sort(self) -> None:
         if not self.show_processes:
@@ -2048,7 +2048,7 @@ class MonitorApp(App):
 
     def _show_overlay(self, kind: str) -> None:
         """Esconde TODAS as seções do left (com inline display:none, que vence
-        a class CSS) e mostra o overlay no lugar — sem duplicação visual."""
+        a class CSS) e mostra o overlay no lugar — sem duplicaçêo visual."""
         left = self.query_one("#left-column")
         left.add_class("-overlay-on")
         for sid in self.ALL_LEFT_SECTIONS:
@@ -2059,7 +2059,7 @@ class MonitorApp(App):
         self.query_one(PanelOverlay).show_kind(kind, self)
 
     def action_open_modal(self, kind: str) -> None:
-        """Cota/Máquina sempre vão direto pra overlay.
+        """Cota/Máquina sempre vêo direto pra overlay.
         Slot kinds: 1ª press troca slot · 2ª press na mesma kind abre overlay.
         """
         if kind in ("quota", "system"):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Serve o iccmonit v2 apenas na interface local.
 
-Para acesso remoto, use um túnel SSH. O projeto não oferece bind em LAN ou
+Para acesso remoto, use um túnel SSH. O projeto nêo oferece bind em LAN ou
 0.0.0.0 porque a TUI expõe metadados sensíveis da máquina.
 """
 
@@ -37,7 +37,7 @@ def main() -> None:
 
     url = f"http://{HOST}:{port}"
     print(f"Servindo somente localmente em {url} (Ctrl+C para sair)")
-    print("Para acesso remoto, use túnel SSH; bind em LAN/0.0.0.0 não é suportado.")
+    print("Para acesso remoto, use túnel SSH; bind em LAN/0.0.0.0 nêo é suportado.")
     open_browser_after(url)
     Server(
         command=f"{sys.executable} monitor.py",

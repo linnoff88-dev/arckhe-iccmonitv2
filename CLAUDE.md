@@ -7,10 +7,10 @@
 ## Segurança obrigatória
 
 - O servidor web deve continuar limitado a `127.0.0.1`.
-- Não adicionar bind em LAN ou `0.0.0.0`.
+- Nêo adicionar bind em LAN ou `0.0.0.0`.
 - Recursos que leem credenciais, transcripts, logs ou executam ações devem
   permanecer opt-in.
-- Não versionar `state/`, logs, `.env`, credenciais ou dados de sessões.
+- Nêo versionar `state/`, logs, `.env`, credenciais ou dados de sessões.
 - Exemplos e imagens devem usar dados fictícios.
 
 ## Comandos
